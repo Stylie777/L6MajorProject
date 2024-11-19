@@ -11,7 +11,7 @@ The Kanban board for the project can be seen on Trello [here](kanban-baord).
 This tool is designed a Proof of Concept for a testing suite to validate LLVM's IR tests. The tool will clone the latest version of the [llvm-project](llvm-project) and compare the content's of LLVM's tests to the expected results.
 
 As this is a Proof of Concept, there is currently limitations to the tools capabilities:
-- The tool currently only support the VHCADD Instruction (Section C.2.4.356 of the Arm Cortex-M Reference Manual)
+- The tool currently only support the VHCADD Instruction (Section C.2.4.356 of the [Arm Cortex-M Reference Manual](ARM-Cortex-M-ARM))
 - Only the earlyclobber contraints are checked, realted to register allocation
 
 ## Using the Tool
@@ -62,3 +62,4 @@ python3 src/test_validate_instruction.py
 <!-- Hyperlinks -->
 [kanban-board]:https://trello.com/invite/b/673475fd26c9e89a0131ecd5/ATTI6e3c1073f393a4ab48e90d6a4f9179025704A135/l6majorproject
 [llvm-project]:https://github.com/llvm/llvm-project
+[ARM-Cortex-M-ARM]:https://developer.arm.com/documentation/ddi0553/by/?lang=en
