@@ -28,6 +28,7 @@ From the top level directory of the reporitory, run the following command:
 ```sh
 python3 src/main.py
 ```
+> **BE AWARE**: All files in this project are designed to be run from the parent directory, and not within the child directories.
 
 This will run the tool and handle everything for the user, the results for each instruction will be outputted to your terminal, reflecting the following:
 - For instructions that are valid
@@ -44,15 +45,18 @@ This will run the tool and handle everything for the user, the results for each 
 
 Each of the module files within the `src/` diretory has a related test file as part of this project. Currently the following python files have tests written:
 - `validate_instruction.py`
+- `llvm_ir_reader.py`
 
 To run the tests, use the following command line:
 ```sh
-python3 src/test_{Python File Name}.py
+python3 -m unittest discover tests/ "test_*" -v
 ```
-`{Python File Name}` should be replaced by one of the supported files that are listed above. For example, to test `validate_instruction.py` the command line would be: 
+All the unittest modules in this project support being run in isolation, this can be done by passing the file into python, for example:
 ```sh
-python3 src/test_validate_instruction.py
+python3 tests/test_validate_instruction.py
 ```
+
+These tests are also run within CI when new commits are added to the main branch.
 
 ## Version History
 
