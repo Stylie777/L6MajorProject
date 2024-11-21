@@ -2,8 +2,8 @@ class InstructionValidity:
     _result = False
     _is_regex = False
 
-    def __init__ (self, result: bool, is_regex: bool) -> None:
-        self._result = result;
+    def __init__(self, result: bool, is_regex: bool) -> None:
+        self._result = result
         self._is_regex = is_regex
 
     def get_result(self) -> bool:
@@ -11,6 +11,7 @@ class InstructionValidity:
 
     def get_is_regex(self) -> bool:
         return self._is_regex
+
 
 class VhcaddInstruction:
     _name = ""
@@ -35,15 +36,20 @@ class VhcaddInstruction:
 
     def is_earlyclobber(self) -> bool:
         return True if self._dt == "s32" else False
-    
+
     def is_register_allocation_valid(self) -> InstructionValidity:
         if self._register_regex:
             return InstructionValidity(False, True)
 
         if self.is_earlyclobber():
-            return InstructionValidity(True, False) if self._qd != self._qm else InstructionValidity(False, False)
+            return (
+                InstructionValidity(True, False)
+                if self._qd != self._qm
+                else InstructionValidity(False, False)
+            )
 
         return InstructionValidity(True, False)
+
 
 def validate_instruction(inst: str) -> InstructionValidity:
 
