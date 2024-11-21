@@ -26,5 +26,5 @@ jobs:
         pip install -r src/requirements.txt
     - name: Run Tests
       run: |
-        python3 tests/test_validate_instructions.py
+        python3 tests/test_validate_instruction.py
 
