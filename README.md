@@ -2,10 +2,6 @@
 
 This repository locates all technical work related to my L6 Major Project for my Digital Technology Solutions Apprenticeship. 
 
-## Kanban Board
-
-The Kanban board for the project can be seen on Trello [here](kanban-baord).
-
 ## The Tool
 
 This tool is designed a Proof of Concept for a testing suite to validate LLVM's IR tests. The tool will clone the latest version of the [llvm-project](llvm-project) and compare the content's of LLVM's tests to the expected results.
@@ -65,6 +61,5 @@ These tests are also run within CI when new commits are added to the main branch
 - Support for checking the earlyclobber contraint for the VHCADD instruction
 
 <!-- Hyperlinks -->
-[kanban-board]:https://trello.com/invite/b/673475fd26c9e89a0131ecd5/ATTI6e3c1073f393a4ab48e90d6a4f9179025704A135/l6majorproject
 [llvm-project]:https://github.com/llvm/llvm-project
 [ARM-Cortex-M-ARM]:https://developer.arm.com/documentation/ddi0553/by/?lang=en
