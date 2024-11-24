@@ -28,7 +28,8 @@ From the top level directory of the reporitory, run the following command:
 ```sh
 python3 src/main.py
 ```
-> **BE AWARE**: All files in this project are designed to be run from the parent directory, and not within the child directories.
+
+> **WARNING**: All files in this project are designed to be run from the parent directory, and not within the child directories.
 
 This will run the tool and handle everything for the user, the results for each instruction will be outputted to your terminal, reflecting the following:
 - For instructions that are valid
