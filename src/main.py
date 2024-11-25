@@ -49,6 +49,7 @@ def collect_instructions():
 
     return instructions
 
+
 @pytest.mark.parametrize("instruction", collect_instructions())
 def test_instruction(instruction: str):
     result = validate_instruction(instruction)

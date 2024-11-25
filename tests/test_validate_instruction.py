@@ -39,7 +39,7 @@ class TestValidateInstruction(unittest.TestCase):
         result = validate_instruction(inst)
 
         self.assertTrue(result.get_result())
-    
+
     def test_validate_instruction_with_invalid_rotate_value(self):
         inst = "vhcadd.s8 q2, q1, q0, #180"
         result = validate_instruction(inst)

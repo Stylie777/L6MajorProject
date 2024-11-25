@@ -1,5 +1,6 @@
 import re
 
+
 class InstructionValidity:
     _result = False
     _is_regex = False
