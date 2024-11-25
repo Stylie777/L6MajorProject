@@ -1,3 +1,5 @@
+import re
+
 class InstructionValidity:
     _result = False
     _is_regex = False
@@ -14,6 +16,7 @@ class InstructionValidity:
 
 
 class VectorInstruction:
+    _inst = ""
     _name = ""
     _dt = ""
     _qd = ""
@@ -23,14 +26,15 @@ class VectorInstruction:
     _register_regex = False
 
     def __init__(self, inst: str) -> None:
-        self._name = inst.split(".")[0]
-        self._dt = inst.split(".")[1].split(" ")[0]
+        self._inst = inst
         if r"{{" in inst:
             self._register_regex = True
-        else:
-            self._qd = inst.split(" ")[1].split(",")[0]
-            self._qn = inst.split(" ")[2].split(",")[0]
-            self._qm = inst.split(" ")[3].split(",")[0]
+            return
+        self._name = inst.split(".")[0]
+        self._dt = inst.split(".")[1].split(" ")[0]
+        self._qd = inst.split(" ")[1].split(",")[0]
+        self._qn = inst.split(" ")[2].split(",")[0]
+        self._qm = inst.split(" ")[3].split(",")[0]
         self._rot = inst.split(" ")[4].split(",")[0]
         return
 
@@ -38,17 +42,25 @@ class VectorInstruction:
         return True if self._dt == "s32" else False
 
     def is_register_allocation_valid(self) -> InstructionValidity:
+        valid = True
+        is_regex = False
         if self._register_regex:
-            return InstructionValidity(False, True)
+            is_regex = True
+            return InstructionValidity(valid, is_regex)
 
-        if self.is_earlyclobber():
-            return (
-                InstructionValidity(True, False)
-                if self._qd != self._qm
-                else InstructionValidity(False, False)
-            )
+        if self.is_earlyclobber() and self._qd == self._qm:
+            valid = False
+            return InstructionValidity(valid, is_regex)
 
-        return InstructionValidity(True, False)
+        if self._rot != "#90" and self._rot != "#270":
+            valid = False
+            return InstructionValidity(valid, is_regex)
+
+        if not (re.search(r"q[0-7], q[0-7], q[0-7]", self._inst)):
+            valid = False
+            return InstructionValidity(valid, is_regex)
+
+        return InstructionValidity(valid, is_regex)
 
 
 def validate_instruction(inst: str) -> InstructionValidity:

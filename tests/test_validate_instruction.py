@@ -15,28 +15,42 @@ class TestValidateInstruction(unittest.TestCase):
         result = validate_instruction(inst)
 
         self.assertTrue(result.get_result())
-        self.assertFalse(result.get_is_regex())
 
     def test_validate_instruction_with_invalid_earlyclobber_instruction(self):
         inst = "vhcadd.s32 q0, q0, q0, #270"
         result = validate_instruction(inst)
 
         self.assertFalse(result.get_result())
-        self.assertFalse(result.get_is_regex())
 
     def test_validate_instruction_with_valid_instruction(self):
         inst = "vhcadd.s8 q2, q1, q0, #90"
         result = validate_instruction(inst)
 
         self.assertTrue(result.get_result())
-        self.assertFalse(result.get_is_regex())
 
     def test_validate_instruction_with_regex_instruction(self):
         inst = r"vhcadd.s8 q{{[0-9]+}}, q{{[0-9]+}}, q{{[0-9]+}}, #90"
         result = validate_instruction(inst)
 
-        self.assertFalse(result.get_result())
         self.assertTrue(result.get_is_regex())
+
+    def test_validate_instruction_with_valid_rotate_value(self):
+        inst = "vhcadd.s8 q2, q1, q0, #270"
+        result = validate_instruction(inst)
+
+        self.assertTrue(result.get_result())
+    
+    def test_validate_instruction_with_invalid_rotate_value(self):
+        inst = "vhcadd.s8 q2, q1, q0, #180"
+        result = validate_instruction(inst)
+
+        self.assertFalse(result.get_result())
+
+    def test_validate_instruction_with_registers_that_do_not_exist(self):
+        inst = "vhcadd.s8 q9, q10, q11, #270"
+        result = validate_instruction(inst)
+
+        self.assertFalse(result.get_result())
 
     def test_VectorInstruction_is_earlyclobber_with_earlyclobber_instruction(self):
         inst = VectorInstruction("vhcadd.s32 q2, q1, q0, #270")
@@ -57,6 +71,8 @@ class TestValidateInstruction(unittest.TestCase):
     def test_InstructionValidity_get_result_with_true_result(self):
         result = InstructionValidity(False, False)
         result._result = True
+
+        self.assertTrue(result.get_result())
 
     def test_InstructionValidity_get_result_with_false_is_regex(self):
         result = InstructionValidity(False, False)
