@@ -5,7 +5,7 @@ sys.path.append("src/")
 from llvm_ir_reader import extract_instructions
 
 
-class TestStringMethods(unittest.TestCase):
+class TestLlvmIrReader(unittest.TestCase):
     def test_extract_instructions_with_valid_vhcadd_instructions(self):
         file = open("tests/mocks/fake_test_valid.ll")
         instructions = extract_instructions(file)

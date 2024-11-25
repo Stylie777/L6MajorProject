@@ -9,7 +9,7 @@ from validate_instruction import (
 )
 
 
-class TestStringMethods(unittest.TestCase):
+class TestValidateInstruction(unittest.TestCase):
     def test_validate_instruction_with_valid_earlyclobber_instruction(self):
         inst = "vhcadd.s32 q2, q1, q0, #270"
         result = validate_instruction(inst)
