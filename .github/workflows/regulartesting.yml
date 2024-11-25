@@ -24,4 +24,4 @@ jobs:
         pip install -r src/requirements.txt
     - name: Run Tests
       run: |
-        python3 src/main.py
+        pytest src/main.py

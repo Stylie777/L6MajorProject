@@ -1,4 +1,4 @@
-import subprocess
+import pytest
 import git
 import pathlib
 import shutil
@@ -37,26 +37,26 @@ def remove_llvm(path: str = "llvm-project/") -> None:
     )
 
 
-def parse_command_line_options():
-    return None
-
-
-if __name__ == "__main__":
+def collect_instructions():
     clone_llvm()
 
-    # file_path = f"{pathlib.Path.cwd()}/llvm-project-copy/llvm/test/CodeGen/Thumb2/mve-intrinsics/vcaddq.ll"
     file_path = f"{pathlib.Path.cwd()}/llvm-project/llvm/test/CodeGen/Thumb2/mve-intrinsics/vcaddq.ll"
     file = open(file_path, "r")
     instructions = extract_instructions(file)
     file.close()
 
-    for inst in instructions:
-        result = validate_instruction(inst)
-        if result.get_result() and not result.get_is_regex():
-            print(f"{inst} is a valid Arm Assembley Instruction")
-        elif result.get_is_regex() == True:
-            continue
-        else:
-            print(f"{inst} is not a valid Arm Assembley instruction")
-
     remove_llvm()
+
+    return instructions
+
+@pytest.mark.parametrize("instruction", collect_instructions())
+def test_instruction(instruction: str):
+    result = validate_instruction(instruction)
+    if result.get_is_regex() == True:
+        pytest.skip(f"{instruction} is in the form of a FileCheck Regular Expression.")
+    assert result.get_result() == True
+    assert result.get_is_regex() == False
+
+
+if __name__ == "__main__":
+    pytest.main()
