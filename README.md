@@ -15,7 +15,7 @@ As this is a Proof of Concept, there is currently limitations to the tools capab
 
 There are extra Python modules that are required to run the tool, these are listed in `src/requirements.txt`. To install them using Python's `pip` module, run the following command in your terminal (Note: these commands are for Bash on MacOS and Linux):
 ```sh
-pip install src/requirements.txt
+pip install -r src/requirements.txt
 ```
 
 ### Running the tool
