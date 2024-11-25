@@ -13,7 +13,7 @@ class InstructionValidity:
         return self._is_regex
 
 
-class VhcaddInstruction:
+class VectorInstruction:
     _name = ""
     _dt = ""
     _qd = ""
@@ -53,6 +53,6 @@ class VhcaddInstruction:
 
 def validate_instruction(inst: str) -> InstructionValidity:
 
-    instruction = VhcaddInstruction(inst)
+    instruction = VectorInstruction(inst)
 
     return instruction.is_register_allocation_valid()

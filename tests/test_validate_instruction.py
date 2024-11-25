@@ -4,7 +4,7 @@ import sys
 sys.path.append("src/")
 from validate_instruction import (
     validate_instruction,
-    VhcaddInstruction,
+    VectorInstruction,
     InstructionValidity,
 )
 
@@ -38,13 +38,13 @@ class TestStringMethods(unittest.TestCase):
         self.assertFalse(result.get_result())
         self.assertTrue(result.get_is_regex())
 
-    def test_VhcaddInstruction_is_earlyclobber_with_earlyclobber_instruction(self):
-        inst = VhcaddInstruction("vhcadd.s32 q2, q1, q0, #270")
+    def test_VectorInstruction_is_earlyclobber_with_earlyclobber_instruction(self):
+        inst = VectorInstruction("vhcadd.s32 q2, q1, q0, #270")
 
         self.assertTrue(inst.is_earlyclobber())
 
-    def test_VhcaddInstruction_is_earlyclobber_with_non_earlyclobber_instruction(self):
-        inst = VhcaddInstruction("vhcadd.s8 q2, q1, q0, #270")
+    def test_VectorInstruction_is_earlyclobber_with_non_earlyclobber_instruction(self):
+        inst = VectorInstruction("vhcadd.s8 q2, q1, q0, #270")
 
         self.assertFalse(inst.is_earlyclobber())
 
