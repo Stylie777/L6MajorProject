@@ -42,30 +42,36 @@ class VectorInstruction:
     def is_earlyclobber(self) -> bool:
         return True if self._dt == "s32" else False
 
-    def is_register_allocation_valid(self) -> InstructionValidity:
-        valid = True
-        is_regex = False
-        if self._register_regex:
-            is_regex = True
-            return InstructionValidity(valid, is_regex)
+    def is_instruction_regex(self) -> bool:
+        return self._register_regex
+
+    def is_register_allocation_valid(self) -> bool:
 
         if self.is_earlyclobber() and self._qd == self._qm:
-            valid = False
-            return InstructionValidity(valid, is_regex)
-
-        if self._rot != "#90" and self._rot != "#270":
-            valid = False
-            return InstructionValidity(valid, is_regex)
+            return False
 
         if not (re.search(r"q[0-7], q[0-7], q[0-7]", self._inst)):
-            valid = False
-            return InstructionValidity(valid, is_regex)
+            return False
 
-        return InstructionValidity(valid, is_regex)
+        return True
+
+    def is_instruction_rot_valid(self) -> bool:
+        if self._rot != "#90" and self._rot != "#270":
+            return False
+
+        return True
 
 
 def validate_instruction(inst: str) -> InstructionValidity:
-
     instruction = VectorInstruction(inst)
 
-    return instruction.is_register_allocation_valid()
+    if instruction.is_instruction_regex():
+        return InstructionValidity(False, True)
+
+    if not instruction.is_instruction_rot_valid():
+        return InstructionValidity(False, False)
+
+    if not instruction.is_register_allocation_valid():
+        return InstructionValidity(False, False)
+
+    return InstructionValidity(True, False)

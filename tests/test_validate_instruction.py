@@ -62,6 +62,54 @@ class TestValidateInstruction(unittest.TestCase):
 
         self.assertFalse(inst.is_earlyclobber())
 
+    def test_VextorInstruction_is_instruction_regex_with_regex_instruction(self):
+        inst = VectorInstruction(
+            r"vhcadd.s8 q{{[0-9]+}}, q{{[0-9]+}}, q{{[0-9]+}}, #90"
+        )
+
+        self.assertTrue(inst.is_instruction_regex())
+
+    def test_VextorInstruction_is_instruction_regex_with_non_regex_instruction(self):
+        inst = VectorInstruction("vhcadd.s8 q2, q1, q0, #270")
+
+        self.assertFalse(inst.is_instruction_regex())
+
+    def test_VectorInstruction_is_register_allocation_valid_with_valid_earlyclobber_instruction(
+        self,
+    ):
+        inst = VectorInstruction("vhcadd.s32 q2, q1, q0, #270")
+
+        self.assertTrue(inst.is_register_allocation_valid())
+
+    def test_VectorInstruction_is_register_allocation_valid_with_invalid_earlyclobber_instruction(
+        self,
+    ):
+        inst = VectorInstruction("vhcadd.s32 q0, q0, q0, #270")
+
+        self.assertFalse(inst.is_register_allocation_valid())
+
+    def test_VectorInstruction_is_register_allocation_valid_with_valid_registers(self):
+        inst = VectorInstruction("vhcadd.s8 q0, q0, q0, #270")
+
+        self.assertTrue(inst.is_register_allocation_valid())
+
+    def test_VectorInstruction_is_register_allocation_valid_with_invalid_registers(
+        self,
+    ):
+        inst = VectorInstruction("vhcadd.s8 q10, q10, q10, #270")
+
+        self.assertFalse(inst.is_register_allocation_valid())
+
+    def test_VectorInstruction_is_register_allocation_valid_with_rot_value(self):
+        inst = VectorInstruction("vhcadd.s8 q0, q0, q0, #270")
+
+        self.assertTrue(inst.is_instruction_rot_valid())
+
+    def test_VectorInstruction_is_register_allocation_invalid_with_rot_value(self):
+        inst = VectorInstruction("vhcadd.s8 q0, q0, q0, #180")
+
+        self.assertFalse(inst.is_instruction_rot_valid())
+
     def test_InstructionValidity_get_result_with_false_result(self):
         result = InstructionValidity(False, False)
         result._result = False
