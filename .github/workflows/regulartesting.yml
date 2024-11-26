@@ -24,4 +24,4 @@ jobs:
         pip install -r src/requirements.txt
     - name: Run Tests
       run: |
-        pytest src/main.py
+        pytest src/test_llvm.py -v

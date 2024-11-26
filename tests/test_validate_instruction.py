@@ -62,14 +62,14 @@ class TestValidateInstruction(unittest.TestCase):
 
         self.assertFalse(inst.is_earlyclobber())
 
-    def test_VextorInstruction_is_instruction_regex_with_regex_instruction(self):
+    def test_VectorInstruction_is_instruction_regex_with_regex_instruction(self):
         inst = VectorInstruction(
             r"vhcadd.s8 q{{[0-9]+}}, q{{[0-9]+}}, q{{[0-9]+}}, #90"
         )
 
         self.assertTrue(inst.is_instruction_regex())
 
-    def test_VextorInstruction_is_instruction_regex_with_non_regex_instruction(self):
+    def test_VectorInstruction_is_instruction_regex_with_non_regex_instruction(self):
         inst = VectorInstruction("vhcadd.s8 q2, q1, q0, #270")
 
         self.assertFalse(inst.is_instruction_regex())

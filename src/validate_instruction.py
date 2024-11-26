@@ -1,4 +1,5 @@
 import re
+from llvm_ir_reader import SupportedEarlyClobberInstructions
 
 
 class InstructionValidity:
@@ -40,7 +41,12 @@ class VectorInstruction:
         return
 
     def is_earlyclobber(self) -> bool:
-        return True if self._dt == "s32" else False
+        supported_insts = SupportedEarlyClobberInstructions()
+        return (
+            True
+            if supported_insts.is_instruction_earlyclobber(self._name, self._dt)
+            else False
+        )
 
     def is_instruction_regex(self) -> bool:
         return self._register_regex

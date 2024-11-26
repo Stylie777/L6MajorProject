@@ -22,21 +22,12 @@ pip install -r src/requirements.txt
 
 From the top level directory of the reporitory, run the following command:
 ```sh
-pytest src/main.py
+pytest src/test_llvm.py
 ```
 
-> The tool uses the Pytest suite, supported by calling the file directly with Python from the top level directory, however this is the method that is reccomended and used in CI. 
+> The tool uses the Pytest suite
 
-This will run the tool and handle everything for the user, the results for each instruction will be outputted to your terminal, reflecting the following:
-- For instructions that are valid
-```sh
-<instruction> is a valid Arm Assembley Instruction
-```
-- For instructions that are not valid
-```sh
-<instruction> is not a valid Arm Assembley instruction
-```
-`<instruction>` will be replaced by the instruction that is being validated.
+This will run the tool and handle everything for the user, the results for each instruction will be outputted to your terminal. Any failures will be highlighted by Pytest. Running with the `-v` option will expand the information available.
 
 ## Running the Tests
 
@@ -46,8 +37,10 @@ Each of the module files within the `src/` diretory has a related test file as p
 
 To run the tests, use the following command line:
 ```sh
-python3 -m unittest discover tests/ "test_*" -v
+python3 -m unittest discover tests/ "test_*"
 ```
+> Running with `-v` will detail each test being run, rather than just a summary
+
 All the unittest modules in this project support being run in isolation, this can be done by passing the file into python, for example:
 ```sh
 python3 tests/test_validate_instruction.py
