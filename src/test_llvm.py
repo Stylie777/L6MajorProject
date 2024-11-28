@@ -7,42 +7,9 @@ from llvm_ir_reader import extract_instructions
 from validate_instruction import validate_instruction, InstructionValidity
 
 
-def clone_llvm(path: str = "llvm-project/") -> None:
-    """
-    Clones the LLVM Project as a shallow clone with a depth of 1\n
-    inputs:
-        path (str): The path where the llvm-project will be located. By default this is 'llvm-project/'.
-    """
-    print("Cloning latest LLVM Project")
-
-    git.Repo.clone_from(
-        "https://github.com/llvm/llvm-project.git",
-        f"{pathlib.Path.cwd()}/{path}" if path == "llvm-project/" else f"{path}",
-        depth=1,
-    )
-
-    print("Cloned")
-
-
-def remove_llvm(path: str = "llvm-project/") -> None:
-    """
-    Removes the LLVM-Project as it is no longer needed once the testing is complete\n
-    inputs:
-        path (str): The path where the llvm-project repo is located. By default this is 'llvm-project/'.
-    """
-    shutil.rmtree(
-        f"{pathlib.Path.cwd()}/{path}" if path == "llvm-project/" else f"{path}"
-    )
-    print(
-        "Removed llvm-project repository from your machine, when the tool is run next time, it will pull the latest version of llvm"
-    )
-
-
 def collect_instructions():
-    clone_llvm()
-
     files = os.listdir(
-        f"{pathlib.Path.cwd()}/llvm-project-copy/llvm/test/CodeGen/Thumb2/mve-intrinsics/"
+        f"{pathlib.Path.cwd()}/llvm-project/llvm/test/CodeGen/Thumb2/mve-intrinsics/"
     )
     instructions = []
     for file in files:
@@ -52,8 +19,6 @@ def collect_instructions():
         file = open(file_path, "r")
         instructions += extract_instructions(file)
         file.close()
-
-    remove_llvm()
 
     return list(dict.fromkeys(instructions))
 
