@@ -2,6 +2,7 @@ import pytest
 import git
 import pathlib
 import shutil
+import os
 from llvm_ir_reader import extract_instructions
 from validate_instruction import validate_instruction, InstructionValidity
 
@@ -40,7 +41,9 @@ def remove_llvm(path: str = "llvm-project/") -> None:
 def collect_instructions():
     clone_llvm()
 
-    files = ["vcaddq.ll"]
+    files = os.listdir(
+        f"{pathlib.Path.cwd()}/llvm-project-copy/llvm/test/CodeGen/Thumb2/mve-intrinsics/"
+    )
     instructions = []
     for file in files:
         if file == "v2i1-upgrade.ll":
@@ -52,7 +55,7 @@ def collect_instructions():
 
     remove_llvm()
 
-    return instructions
+    return list(dict.fromkeys(instructions))
 
 
 @pytest.mark.parametrize("instruction", collect_instructions())
@@ -62,3 +65,7 @@ def test_instruction(instruction: str):
         pytest.skip(f"{instruction} is in the form of a FileCheck Regular Expression.")
     assert result.get_result() == True
     assert result.get_is_regex() == False
+
+
+if __name__ == "__main__":
+    pytest.main()

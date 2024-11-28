@@ -7,8 +7,17 @@ This repository locates all technical work related to my L6 Major Project for my
 This tool is designed a Proof of Concept for a testing suite to validate LLVM's IR tests. The tool will clone the latest version of the [llvm-project](llvm-project) and compare the content's of LLVM's tests to the expected results.
 
 As this is a Proof of Concept, there is currently limitations to the tools capabilities:
-- The tool currently only support the VHCADD Instruction (Section C.2.4.356 of the [Arm Cortex-M Reference Manual](ARM-Cortex-M-ARM))
-- Only the earlyclobber contraints are checked, realted to register allocation
+- The tool currently only support the following instructions from the [Arm Cortex-M Reference Manual](ARM-Cortex-M-ARM)
+    - VCADD  - Section C2.4.312
+    - VCADD (Floating Point) - Section C2.4.313
+    - VCMUL (Floating Point) - Section C2.4.321
+    - VHCADD - Section C.2.4.356
+    - VQDMULL - Section C2.4.440
+    - VREV64 - Section C2.4.453
+- Only the following elements are verfified:
+    - Earlyclobber contraints
+    - Register Allocation is within the expected range
+    - Rotate value is within the expected parameters if used
 
 ## Using the Tool
 ### Installing Requirments
@@ -56,6 +65,12 @@ These tests are also run within CI when new commits are added to the main branch
 ### v0.2 - Support for Pytest
 - Updated the logic to utilise Python's Pytest module.
 
+### v0.3 - Expanded support for extra instructions
+- The following instructions are now supported by the tool
+    - VCADD (Both Integer and Floating Point variants)
+    - VREV64
+    - VCMUL (Floating Point)
+    - VQDMULL
 <!-- Hyperlinks -->
 [llvm-project]:https://github.com/llvm/llvm-project
 [ARM-Cortex-M-ARM]:https://developer.arm.com/documentation/ddi0553/by/?lang=en
