@@ -1,0 +1,19 @@
+name: Update LLVM Submodule
+on:
+    schedule:
+    - cron: "0 9 * * *"
+
+jobs:
+  update_llvm:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        token: ${{secrets.PAT_ACTIONS}}
+        submodules: recursive
+
+    - name: Run update script
+      run: |
+        chmod 755 update_llvm.sh
+        ./update_llvm.sh
