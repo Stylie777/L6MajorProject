@@ -101,7 +101,7 @@ class VectorInstruction:
         inputs:
 
             - self (self@VectorInstruction)
-        
+
         outputs:
 
             - (bool) value to demonstrate if the instruction is in the form of a regular expression.
@@ -115,7 +115,7 @@ class VectorInstruction:
         inputs:
 
             - self (self@VectorInstruction)
-        
+
         outputs:
 
             - (bool) : Value to represent if the allocation of registers is valid.
@@ -145,7 +145,7 @@ class VectorInstruction:
         inputs:
 
             - self (self@VectorInstruction)
-        
+
         outputs:
 
             - (bool) : Value to represent if the rotate value is valid.
@@ -166,10 +166,10 @@ def validate_instruction(inst: str) -> InstructionValidity:
     inputs:
 
         - inst (str) : The instruction that is to be validated as a full string
-    
+
     outputs:
 
-        - (InstructionValidity) : Data structure that contains information relating to if the instruction id valid and if it is in the form of a Regular Expression. 
+        - (InstructionValidity) : Data structure that contains information relating to if the instruction id valid and if it is in the form of a Regular Expression.
     """
     instruction = VectorInstruction(inst)
 

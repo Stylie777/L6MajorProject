@@ -77,10 +77,10 @@ class SupportedEarlyClobberInstructions:
         Checks if the instruction being validated has earlyclobber contraints
 
         inputs:
-        
+
             - inst_name (str) : The name of the instruction being validated.
             - inst_size (str) : The size of the instruction being validated. Only specific size variants of instructions have earlyclobber contraints.
-        
+
         outputs:
 
             - (bool) : Values determining if the instruction has earlyclobber constraints.
@@ -135,7 +135,7 @@ class SupportedEarlyClobberInstructions:
         inputs:
 
             - inst_name (str) : The name of the instruction being validated.
-        
+
         outputs:
             - (list) : A list of the rotate values that are applicable to the instruction.
         """
@@ -152,7 +152,7 @@ class SupportedEarlyClobberInstructions:
         inputs:
 
             - inst_name (str) : The name of the instruction being validated.
-        
+
         outputs:
 
             - (bool) : Value to determine if the instruction uses a Qn input register.
@@ -171,7 +171,7 @@ def extract_instructions(file: TextIOWrapper) -> list:
     inputs:
 
         - file (TextIOWrapper) : The file being parsed.
-    
+
     outputs:
 
         - instructions (list) : A list of strings which represent each instruction that is picked up from the file.
