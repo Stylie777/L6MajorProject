@@ -7,13 +7,35 @@ class InstructionValidity:
     _is_regex = False
 
     def __init__(self, result: bool, is_regex: bool) -> None:
+        """
+        Initialises the InstructionValidty object using the information passed.
+
+        inputs:
+
+            - result   (bool) : Value to represent if the instruction is valid.
+            - is_regex (bool) : Value to represent if the instruction is in the form of a Regular Expression.
+        """
         self._result = result
         self._is_regex = is_regex
 
     def get_result(self) -> bool:
+        """
+        Returns the result stored within the data structure. This represenets if the instruction is valid.
+
+        outputs:
+
+            - (bool) : Value of the _result variable.
+        """
         return self._result
 
     def get_is_regex(self) -> bool:
+        """
+        Returns the value stored within the data structure. This represents if the instruction is in the form of a Regular Expression
+
+        outputs:
+
+            - (bool) : Value of the _is_regex variable.
+        """
         return self._is_regex
 
 
@@ -28,6 +50,14 @@ class VectorInstruction:
     _register_regex = False
 
     def __init__(self, inst: str) -> None:
+        """
+        Initialises the VectorInstruction object. Splits the instruction into its specific elements and stores them in the data structure.
+
+        inputs:
+
+            - self (self@VectorInstruction)
+            - inst (str) : The instruction that is to be split into its individual parts.
+        """
         supported_insts = SupportedEarlyClobberInstructions()
         self._inst = inst
         if r"{{" in inst:
@@ -46,6 +76,17 @@ class VectorInstruction:
         return
 
     def is_earlyclobber(self) -> bool:
+        """
+        Returns if the instruction has earlyclobber contraints
+
+        inputs:
+
+            - self (self@VectorInstruction)
+
+        outputs:
+
+            - (bool) : Value to represent if the instruction has earlyclobber contraints.
+        """
         supported_insts = SupportedEarlyClobberInstructions()
         return (
             True
@@ -54,9 +95,31 @@ class VectorInstruction:
         )
 
     def is_instruction_regex(self) -> bool:
+        """
+        Returns if the instructions is in the form of FileCheck Regular Expressions. These currently cannot be validated and are skipped by PyTest
+
+        inputs:
+
+            - self (self@VectorInstruction)
+        
+        outputs:
+
+            - (bool) value to demonstrate if the instruction is in the form of a regular expression.
+        """
         return self._register_regex
 
     def is_register_allocation_valid(self) -> bool:
+        """
+        Checks if the register allocation is valid for the instruction. Earlyclobber constrains, if the instruction has a Qn and the range of registers available are taken into account.
+
+        inputs:
+
+            - self (self@VectorInstruction)
+        
+        outputs:
+
+            - (bool) : Value to represent if the allocation of registers is valid.
+        """
         supported_insts = SupportedEarlyClobberInstructions()
 
         if self.is_earlyclobber():
@@ -76,6 +139,17 @@ class VectorInstruction:
         return True
 
     def is_instruction_rot_valid(self) -> bool:
+        """
+        Checks if the instructions rotate value is valid according to the parameters stored in SupportedEarlyClobberInstructions()
+
+        inputs:
+
+            - self (self@VectorInstruction)
+        
+        outputs:
+
+            - (bool) : Value to represent if the rotate value is valid.
+        """
         supported_insts = SupportedEarlyClobberInstructions()
         if supported_insts.has_rot(
             self._name
@@ -86,6 +160,17 @@ class VectorInstruction:
 
 
 def validate_instruction(inst: str) -> InstructionValidity:
+    """
+    Validates the instruction to ensure it is valid
+
+    inputs:
+
+        - inst (str) : The instruction that is to be validated as a full string
+    
+    outputs:
+
+        - (InstructionValidity) : Data structure that contains information relating to if the instruction id valid and if it is in the form of a Regular Expression. 
+    """
     instruction = VectorInstruction(inst)
 
     if instruction.is_instruction_regex():

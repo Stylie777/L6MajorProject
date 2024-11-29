@@ -1,3 +1,4 @@
+from io import TextIOWrapper
 import pathlib
 from enum import Enum
 
@@ -51,20 +52,58 @@ class SupportedEarlyClobberInstructions:
         },
     ]
 
-    def find_instructions(self):
+    def find_instructions(self) -> list:
+        """
+        Returns the names of the available instructions that are supported by the tool.
+
+        Outputs:
+
+            - (list) : List of the names of available instructions
+        """
         return [inst["name"] for inst in self._instructions]
 
-    def get_instructions_dict(self):
+    def get_instructions_dict(self) -> dict:
+        """
+        Returns the full dictionary for available instructions, including all relevant information that can be used
+
+        Outputs:
+
+            - dict : The full dictionary of supported instructions.
+        """
         return self._instructions
 
     def is_instruction_earlyclobber(self, inst_name: str, inst_size: str) -> bool:
+        """
+        Checks if the instruction being validated has earlyclobber contraints
+
+        inputs:
+        
+            - inst_name (str) : The name of the instruction being validated.
+            - inst_size (str) : The size of the instruction being validated. Only specific size variants of instructions have earlyclobber contraints.
+        
+        outputs:
+
+            - (bool) : Values determining if the instruction has earlyclobber constraints.
+        """
         for inst in self._instructions:
             if inst["name"] == inst_name and inst_size in inst["size"]:
                 return True
 
         return False
 
-    def get_constraint_type(self, inst_name: str, inst_size: str):
+    def get_constraint_type(self, inst_name: str, inst_size: str) -> list:
+        """
+        Returns the contraint type that is related to the instruction being validated. These contraints can the be used to determine how to ensure if the instruction is valid.
+
+        inputs:
+
+            - inst_name (str) : The name of the instruction being validated.
+            - inst_size (str) : The size of the instruction being validated. Only specific size variants of instructions have earlyclobber contraints.
+
+        outputs:
+
+            - (list) : A list of contraints that apply to the instruction.
+        """
         return [
             inst["constraint"]
             for inst in self._instructions
@@ -72,13 +111,34 @@ class SupportedEarlyClobberInstructions:
         ][0]
 
     def has_rot(self, inst_name: str) -> bool:
+        """
+        Returns boolean value to determine if the instruction uses a rotate value
+
+        inputs:
+
+            - inst_name (str) : The name of the instruction being validated.
+
+        outputs:
+
+            - (bool) : Value to determine if a rotate value is used.
+        """
         for inst in self._instructions:
             if inst["name"] == inst_name and inst["has_rot"]:
                 return True
 
         return False
 
-    def get_rot_values(self, inst_name: str):
+    def get_rot_values(self, inst_name: str) -> list:
+        """
+        Returns the rotate values that apply to the specific instruction. These are different depending on the instruction being validated
+
+        inputs:
+
+            - inst_name (str) : The name of the instruction being validated.
+        
+        outputs:
+            - (list) : A list of the rotate values that are applicable to the instruction.
+        """
         return [
             inst["rot_values"]
             for inst in self._instructions
@@ -86,6 +146,17 @@ class SupportedEarlyClobberInstructions:
         ][0]
 
     def has_qn(self, inst_name: str) -> bool:
+        """
+        Returns if the instruction being validated uses a Qn input register. Not all instructions use two separate input registers, so this needs to be determined when parsing the instruction.
+
+        inputs:
+
+            - inst_name (str) : The name of the instruction being validated.
+        
+        outputs:
+
+            - (bool) : Value to determine if the instruction uses a Qn input register.
+        """
         for inst in self._instructions:
             if inst["name"] == inst_name and inst["has_Qn"]:
                 return True
@@ -93,7 +164,18 @@ class SupportedEarlyClobberInstructions:
         return False
 
 
-def extract_instructions(file) -> str:
+def extract_instructions(file: TextIOWrapper) -> list:
+    """
+    Extracts the instructions from a specific file. Each line is parsed and instructions are added to a list which is returned to the user.
+
+    inputs:
+
+        - file (TextIOWrapper) : The file being parsed.
+    
+    outputs:
+
+        - instructions (list) : A list of strings which represent each instruction that is picked up from the file.
+    """
     instructions = []
     supported_instructions = SupportedEarlyClobberInstructions().find_instructions()
     for line in file:
