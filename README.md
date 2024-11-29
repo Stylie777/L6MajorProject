@@ -44,6 +44,17 @@ This will run the tool and handle everything for the user, the results for each 
 
 ## Running the Tests
 
+Firstly, you need to clone the [llvm-project](llvm-project) project into the source directory. This is managed as a git submodule and can be cloned using the following commands.
+```sh
+git submodule init
+git submodule update
+```
+
+To update the version os llvm-project used once this has been done in GitHub Actions, run the following command:
+```sh
+git submodule update
+```
+
 Each of the module files within the `src/` diretory has a related test file as part of this project. Currently the following python files have tests written:
 - `validate_instruction.py`
 - `llvm_ir_reader.py`
