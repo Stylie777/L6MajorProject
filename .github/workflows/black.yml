@@ -12,8 +12,14 @@ jobs:
   Black:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: psf/black@stable
-      with:
-        options: --check --verbose
-        src: "."
+      - uses: actions/checkout@v3
+      - name: Run Black on src
+        uses: psf/black@stable
+        with:
+          options: --check --verbose
+          src: "./src"
+      - name: Run Black on test
+        uses: psf/black@stable
+        with:
+          options: --check --verbose
+          src: "./test"
