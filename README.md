@@ -8,12 +8,16 @@ This tool is designed a Proof of Concept for a testing suite to validate LLVM's 
 
 As this is a Proof of Concept, there is currently limitations to the tools capabilities:
 - The tool currently only support the following instructions from the [Arm Cortex-M Reference Manual](ARM-Cortex-M-ARM)
-    - VCADD  - Section C2.4.312
-    - VCADD (Floating Point) - Section C2.4.313
-    - VCMUL (Floating Point) - Section C2.4.321
-    - VHCADD - Section C.2.4.356
-    - VQDMULL - Section C2.4.440
-    - VREV64 - Section C2.4.453
+
+| Instruction | Section |
+| :----------- | :-------: |
+| VCADD | C2.4.312 |
+| VCADD (Floating Point) | C2.4.313 |
+| VCMUL (Floating Point) | C2.4.321 |
+| VHCADD | C2.4.356 |
+| VQDMUL | C2.4.440 |
+| VREV64 | C2.4.453 |
+
 - Only the following elements are verfified:
     - Earlyclobber contraints
     - Register Allocation is within the expected range
