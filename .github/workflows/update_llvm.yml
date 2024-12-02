@@ -1,7 +1,7 @@
 name: Update LLVM Submodule
 on:
     schedule:
-    - cron: "0 9 * * *"
+    - cron: "45 8 * * *"
 
 jobs:
   update_llvm:
