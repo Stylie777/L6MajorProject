@@ -33,17 +33,6 @@ pip install -r src/requirements.txt
 
 ### Running the tool
 
-From the top level directory of the reporitory, run the following command:
-```sh
-pytest src/test_llvm.py
-```
-
-> The tool uses the Pytest suite
-
-This will run the tool and handle everything for the user, the results for each instruction will be outputted to your terminal. Any failures will be highlighted by Pytest. Running with the `-v` option will expand the information available.
-
-## Running the Tests
-
 Firstly, you need to clone the [llvm-project](llvm-project) project into the source directory. This is managed as a git submodule and can be cloned using the following commands.
 ```sh
 git submodule init
@@ -54,6 +43,17 @@ To update the version os llvm-project used once this has been done in GitHub Act
 ```sh
 git submodule update
 ```
+
+From the top level directory of the reporitory, run the following command:
+```sh
+pytest src/test_llvm.py
+```
+
+> The tool uses the Pytest suite
+
+This will run the tool and handle everything for the user, the results for each instruction will be outputted to your terminal. Any failures will be highlighted by Pytest. Running with the `-v` option will expand the information available.
+
+## Running the Tests
 
 Each of the module files within the `src/` diretory has a related test file as part of this project. Currently the following python files have tests written:
 - `validate_instruction.py`
