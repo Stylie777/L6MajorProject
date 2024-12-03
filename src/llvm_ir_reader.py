@@ -195,7 +195,7 @@ def extract_instructions(file: TextIOWrapper) -> list:
 
 if __name__ == "__main__":
     print("Running LLVM IR Reader Demo")
-    file_path = f"{pathlib.Path.cwd()}/llvm-project-copy/llvm/test/CodeGen/Thumb2/mve-intrinsics/vcaddq.ll"
+    file_path = f"{pathlib.Path.cwd()}/llvm-project/llvm/test/CodeGen/Thumb2/mve-intrinsics/vcaddq.ll"
 
     file = open(file_path, "r")
 
